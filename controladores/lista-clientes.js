@@ -69,7 +69,7 @@ async function mostrarClientes() {
     const tbody = document.getElementById('tbody')
     tbody.innerHTML = '';
 
-    if (clientes.lenght < 0) {
+    if (clientes.length === 0) {
 
         header.classList.add('hidden');
     }
@@ -79,15 +79,13 @@ async function mostrarClientes() {
         console.log(cliente);
 
         tbody.innerHTML += `
-       
-    
     <tr>
-        <td>
+          <td>
         <select disabled name="spantipopersona" class="tipoPersonaSelect">
-            <option value="1" ${cliente.tipopersona === 'Persona fisica' ? 'selected' : ''}>Persona fisica</option>
-            <option value="2" ${cliente.tipopersona === 'Persona juridica' ? 'selected' : ''}>Persona juridica</option>
+            <option value="1" ${cliente.tipopersona === "1" ? "selected" : ""}>Persona fisica</option>
+            <option value="2" ${cliente.tipopersona === "2" ? "selected" : ""}>Persona juridica</option>
         </select>
-    </td>       
+    </td> 
      <td><span name="spandni">${cliente.dni}</span></td>
         <td><span name="spannombres">${cliente.nombres}</span></td>
         <td><span name="spanapellidoRsocial">${cliente.apellidoRsocial}</span></td>
@@ -105,12 +103,7 @@ async function mostrarClientes() {
             <a class="btnBorrar btn btn-danger btn-sm">Borrar</a>
             <input type="hidden" class="idCliente" value="${cliente.id}">
         </td>
-        </tr>
-
- 
-        
-        `;
-
+        </tr>`;
     }
 }
 
@@ -181,19 +174,19 @@ on(document, 'click', '.btnEditar', e => {
     const botones = e.target.parentNode; // Guardamos el elemento padre del botón
 
     // Guardamos los valores del card de la propiedad
-    id = botones.querySelector('.idCliente').value;
-    const tipopersona = botones.querySelector('#tipo')
-    const dni = botones.querySelector('#dni')
-    const apellidoRsocial = botones.querySelector('#apellidoRsocial')
-    const nombre = botones.querySelector('#nombre')
-    const domicilio = botones.querySelector('#domicilio')
-    const telefono = botones.querySelector('#telefono')
-    const email = botones.querySelector('#email')
-    const localidad = botones.querySelector('#localidad')
-    const cpostal = botones.querySelector('#cpostal')
-    const fnacimiento = botones.querySelector('#fnacimiento')
-    const falta = botones.querySelector('#falta')
-    const fbaja = botones.querySelector('#fbaja')
+    id = botones.querySelector('.idCliente').value
+    const tipopersona = botones.parentNode.querySelector('.tipoPersonaSelect').value
+    const dni = botones.parentNode.querySelector('span[name=spandni]').innerHTML
+    const apellidoRsocial = botones.parentNode.querySelector('span[name=spanapellidoRsocial]').innerHTML
+    const nombre = botones.parentNode.querySelector('span[name=spannombres]').innerHTML
+    const domicilio = botones.parentNode.querySelector('span[name=spandomicilio]').innerHTML
+    const telefono = botones.parentNode.querySelector('span[name=spantelefono]').innerHTML
+    const email = botones.parentNode.querySelector('span[name=spanemail]').innerHTML
+    const localidad = botones.parentNode.querySelector('span[name=spanlocalidad]').innerHTML
+    const cpostal = botones.parentNode.querySelector('span[name=spancpostal]').innerHTML
+    const fnacimiento = botones.parentNode.querySelector('span[name=spanfnacimiento]').innerHTML
+    const falta = botones.parentNode.querySelector('span[name=spanfalta]').innerHTML
+    const fbaja = botones.parentNode.querySelector('span[name=spanfbaja]').innerHTML
 
 
 
@@ -227,9 +220,9 @@ on(document, 'click', '.btnBorrar', e => {
     const nombres = cardFooter.parentNode.querySelector('span[name=spannombres]').innerHTML; // Obtenemos el nombre del artículo
     let aceptar = confirm(`¿Realmente desea eliminar a ${nombres}?`); // Pedimos confirmación para eliminar
     if (aceptar) {
-      eliminarClientes(id);
-      insertarAlerta(`${nombres}  borrado`, 'danger');
-      mostrarClientes();
+        eliminarClientes(id);
+        insertarAlerta(`${nombres}  borrado`, 'danger');
+        mostrarClientes();
     }
-  });
+});
 
